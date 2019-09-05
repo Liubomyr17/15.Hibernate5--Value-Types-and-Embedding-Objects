@@ -1,5 +1,6 @@
 package com.infotech.entities;
 
+import com.infotech.model.Address;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -12,8 +13,7 @@ public class Employee {
 
     @Id
     @Column(name="employee_id")
-    @GeneratedValue(strategy=GenerationType.TABLE, generator = "empid_generator")
-    @TableGenerator (name = "empid_generator", initialValue = 1, allocationSize = 1, table = "empid_seq")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer employeeId;
 
     @Column(name="employee_name",length=200,nullable=false)
@@ -21,6 +21,9 @@ public class Employee {
 
     @Column(name="email")
     private String email;
+
+    @Embedded
+    private Address address;
 
     @Column(name="date_of_joining")
     private Date doj;
@@ -68,6 +71,14 @@ public class Employee {
         this.salary = salary;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -75,6 +86,7 @@ public class Employee {
                 ", employeeName='" + employeeName + '\'' +
                 ", email='" + email + '\'' +
                 ", doj=" + doj +
+                ", address=" + address +
                 ", salary=" + salary +
                 '}';
     }
